@@ -13,6 +13,13 @@ public class Board {
         this.height = height;
         this.path = path;
         pieceBoard = new BoardPiece[width][height];
+
+        for (CoordVector pathPiece: path){
+            final int x = pathPiece.getX();
+            final int y = pathPiece.getY();
+            pieceBoard[x][y] = new Path();
+        }
+
     }
 
     public void place(int x, int y, BoardPiece bp){
@@ -25,5 +32,38 @@ public class Board {
                 pieceBoard[x][y].tick();
             }
         }
+    }
+
+    public void printBoard(){
+        for (int x = 0; x <= width; x++){
+            System.out.print("##");
+        }
+        System.out.println();
+        for (int y = height-1; y >= 0; y--){
+            System.out.print('#');
+            for (int x = 0; x < width; x++){
+                System.out.print(" ");
+
+                if (pieceBoard[x][y] == null){
+                    System.out.print(" ");
+                } else {
+                    System.out.print(pieceBoard[x][y].asChar());
+                }
+            }
+            System.out.println('#');
+        }
+        for (int x = 0; x <= width; x++){
+            System.out.print("##");
+        }
+        System.out.println();
+    }
+
+    public boolean placeTower(Tower tower, int x, int y){
+        if (pieceBoard[x][y] == null) {
+            pieceBoard[x][y] = tower;
+            return true;
+        }
+
+        return false;
     }
 }
