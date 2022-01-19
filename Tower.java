@@ -4,5 +4,10 @@ public class Tower implements BoardPiece{
     public void tick() {
         
     }
-    
+
+    @Override
+    public char asChar() {
+        return 'T';
+    }
+
 }
