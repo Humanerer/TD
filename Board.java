@@ -8,6 +8,12 @@ public class Board {
 
     LinkedList<CoordVector> path;
 
+    /**
+     * Makes a board with the given width and height, as well as a path for enemies to travel along
+     * @param width of the board
+     * @param height of the board
+     * @param path to be taken by enemies
+     */
     Board(int width, int height, LinkedList<CoordVector> path){
         this.width = width;
         this.height = height;
@@ -22,18 +28,20 @@ public class Board {
 
     }
 
-    public void place(int x, int y, BoardPiece bp){
-        pieceBoard[x][y] = bp;
+    /**
+     * Updates the board
+     */
+    public void update(){
+        /**
+         * for each tower, try to attack
+         * 
+         * for each enemy, try to move
+         */
     }
 
-    public void tick(){
-        for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
-                pieceBoard[x][y].tick();
-            }
-        }
-    }
-
+    /**
+     * Prints the board using System.out, '#' is used to symbolise the border
+     */
     public void printBoard(){
         for (int x = 0; x <= width; x++){
             System.out.print("##");
@@ -58,6 +66,13 @@ public class Board {
         System.out.println();
     }
 
+    /**
+     * Places tower at x y coords on the board, returns true if the position is empty and the tower was placed, else false
+     * @param tower to be placed
+     * @param x coord to be placed at
+     * @param y coord to be placed at
+     * @return whether the placment was successful
+     */
     public boolean placeTower(Tower tower, int x, int y){
         if (pieceBoard[x][y] == null) {
             pieceBoard[x][y] = tower;
