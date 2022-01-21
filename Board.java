@@ -6,7 +6,9 @@ public class Board {
     private int height;
     private BoardPiece[][] pieceBoard;
 
-    LinkedList<CoordVector> path;
+    private LinkedList<CoordVector> path;
+    private LinkedList<Tower> towers;
+    private LinkedList<Enemy> enemies;
 
     /**
      * Makes a board with the given width and height, as well as a path for enemies to travel along
@@ -29,14 +31,30 @@ public class Board {
     }
 
     /**
-     * Updates the board
+     * Removes all dead enemies, moves all living enemies along the path, removes enemies which have completed the path
      */
-    public void update(){
-        /**
-         * for each tower, try to attack
-         * 
-         * for each enemy, try to move
-         */
+    public void updateEnemies(){
+        for (int i = 0; i < enemies.size(); i++){
+            Enemy enemy = enemies.get(i);
+            if (enemy.isDead()){
+                enemies.remove(i);
+            } else {
+                enemy.move();
+                if (enemy.getPathIndex() > path.size()){
+                    enemies.remove(i);
+                    //TODO: lives--
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates all towers
+     */
+    private void updateTowers(){
+        for (Tower tower : towers){
+
+        }
     }
 
     /**
@@ -71,7 +89,7 @@ public class Board {
      * @param tower to be placed
      * @param x coord to be placed at
      * @param y coord to be placed at
-     * @return whether the placment was successful
+     * @return whether the placement was successful
      */
     public boolean placeTower(Tower tower, int x, int y){
         if (pieceBoard[x][y] == null) {
@@ -80,5 +98,13 @@ public class Board {
         }
 
         return false;
+    }
+
+    /**
+     * adds an enemy to the start of the path
+     * @param enemy to be added
+     */
+    public void spawn(Enemy enemy){
+        enemies.add(enemy);
     }
 }
