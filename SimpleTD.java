@@ -2,6 +2,8 @@ import java.util.LinkedList;
 
 class SimpleTD {
     public static void main(String[] args) {
+        int lives = 10;
+
         LinkedList<CoordVector> path = new LinkedList<CoordVector>();
         for (int x = 0; x < 32; x++) {
             path.add(new CoordVector(x,4));
@@ -13,6 +15,23 @@ class SimpleTD {
         board.printBoard();
         System.out.println();
         board.placeTower(new Tower(),4,5);
-        board.printBoard();
+//        board.spawn(new Enemy());
+
+        try {
+            while (lives > 0){
+                board.updateTowers();
+                lives -= board.updateEnemies();
+                board.spawn(new Enemy());
+                board.printBoard();
+                System.out.println(lives);
+                
+                Thread.sleep(500);
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+
     }
 }
