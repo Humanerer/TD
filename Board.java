@@ -7,8 +7,8 @@ public class Board {
     private BoardPiece[][] pieceBoard;
 
     private LinkedList<CoordVector> path;
-    private LinkedList<Tower> towers;
-    private LinkedList<Enemy> enemies;
+    private LinkedList<Tower> towers = new LinkedList<>();
+    private LinkedList<Enemy> enemies = new LinkedList<>();
 
     /**
      * Makes a board with the given width and height, as well as a path for enemies to travel along
@@ -32,26 +32,30 @@ public class Board {
 
     /**
      * Removes all dead enemies, moves all living enemies along the path, removes enemies which have completed the path
+     * @return The number of lives lost by the player
      */
-    public void updateEnemies(){
+    public int updateEnemies(){
+        int livesLost = 0;
         for (int i = 0; i < enemies.size(); i++){
             Enemy enemy = enemies.get(i);
             if (enemy.isDead()){
                 enemies.remove(i);
             } else {
                 enemy.move();
-                if (enemy.getPathIndex() > path.size()){
+                if (enemy.getPathIndex() >= path.size()){
+                    livesLost += enemy.getHealth();
                     enemies.remove(i);
-                    //TODO: lives--
+                    i--;
                 }
             }
         }
+        return livesLost;
     }
 
     /**
      * Updates all towers
      */
-    private void updateTowers(){
+    public void updateTowers(){
         for (Tower tower : towers){
 
         }
@@ -72,6 +76,9 @@ public class Board {
 
                 if (pieceBoard[x][y] == null){
                     System.out.print(" ");
+                } else if (enemyAtCoord(x,y)){
+                    System.out.print("E");
+
                 } else {
                     System.out.print(pieceBoard[x][y].asChar());
                 }
@@ -82,6 +89,16 @@ public class Board {
             System.out.print("##");
         }
         System.out.println();
+    }
+
+    private boolean enemyAtCoord(int x, int y){
+        for (Enemy enemy : enemies){
+            CoordVector enemyCoord = path.get(enemy.getPathIndex());
+            if (enemyCoord.getX() == x && enemyCoord.getY() == y){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
