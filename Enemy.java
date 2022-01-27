@@ -3,8 +3,11 @@ public class Enemy {
     private int pathIndex = 0;
     private int moveSpeed = 1;
 
-    Enemy(){
+    Enemy(){}
 
+    Enemy(int health, int moveSpeed){
+        this.health = health;
+        this.moveSpeed = moveSpeed;
     }
 
     public void move(){
@@ -22,4 +25,8 @@ public class Enemy {
     public int getPathIndex(){
         return pathIndex;
     }
+
+    public int getHealth(){
+        return health;
+    };
 }
