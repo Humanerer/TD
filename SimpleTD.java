@@ -14,7 +14,7 @@ class SimpleTD {
         Board board = new Board(32,18, path);
         board.printBoard();
         System.out.println();
-        board.placeTower(new Tower(),4,5);
+        board.placeTower(new Tower(4,5),4,5);
 //        board.spawn(new Enemy());
 
         try {
@@ -24,8 +24,8 @@ class SimpleTD {
                 board.spawn(new Enemy());
                 board.printBoard();
                 System.out.println(lives);
-                
-                Thread.sleep(500);
+
+                Thread.sleep(1000);
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
