@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.lang.Math;
 
 public class Board {
 
@@ -40,6 +41,7 @@ public class Board {
             Enemy enemy = enemies.get(i);
             if (enemy.isDead()){
                 enemies.remove(i);
+                i--;
             } else {
                 enemy.move();
                 if (enemy.getPathIndex() >= path.size()){
@@ -57,8 +59,21 @@ public class Board {
      */
     public void updateTowers(){
         for (Tower tower : towers){
-
+            tower.reduceCoolDown();
+            CoordVector towerCoord = tower.getCoord();
+            int attackRadius = tower.getAttackRadius();
+            for (Enemy enemy : enemies){
+                CoordVector enemyCoord = path.get(enemy.getPathIndex());
+                if (getManhattanDist(towerCoord.getX(), towerCoord.getY(), enemyCoord.getX(), enemyCoord.getY()) <= attackRadius){
+                    enemy.damage(tower.attack());
+                    break;
+                }
+            }
         }
+    }
+
+    private int getManhattanDist(int x1, int y1, int x2, int y2){
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
 
     /**
@@ -111,6 +126,7 @@ public class Board {
     public boolean placeTower(Tower tower, int x, int y){
         if (pieceBoard[x][y] == null) {
             pieceBoard[x][y] = tower;
+            towers.add(tower);
             return true;
         }
 
