@@ -1,8 +1,13 @@
 public class Tower implements BoardPiece{
-    private int attackRadius = 1;
-    private int attackSpeed = 1;
+    private int attackRadius = 2;
+    private int attackSpeed = 4;
     private int attackCoolDown = 0;
     private int damage = 1;
+    private CoordVector coord;
+
+    Tower(int x, int y){
+        coord = new CoordVector(x,y);
+    }
 
     @Override
     public void tick() {
@@ -18,13 +23,24 @@ public class Tower implements BoardPiece{
         return attackRadius;
     }
 
+    public void reduceCoolDown(){
+        attackCoolDown --;
+    }
+
+    public void reduceCoolDown(int reduction){
+        attackCoolDown -= reduction;
+    }
+
     public int attack(){
         if (attackCoolDown <= 0){
             attackCoolDown = attackSpeed;
             return damage;
         }
-        attackCoolDown--;
         return 0;
+    }
+
+    public CoordVector getCoord(){
+        return coord;
     }
 
 }
