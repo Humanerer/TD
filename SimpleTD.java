@@ -27,6 +27,7 @@ class SimpleTD {
 
                 Thread.sleep(1000);
             }
+            System.out.println("<< GAME OVER >>");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }

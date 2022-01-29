@@ -55,7 +55,8 @@ public class Board {
     }
 
     /**
-     * Updates all towers
+     * Reduces the coolDown for each tower by 1 and makes then attempt to attack the youngest enemy
+     * within their attack radius, by Manhattan distance
      */
     public void updateTowers(){
         for (Tower tower : towers){
@@ -72,6 +73,14 @@ public class Board {
         }
     }
 
+    /**
+     * Helper method which returns the manhattan distance between two x,y pairs
+     * @param x1 first x coordinate
+     * @param y1 first y coordinate
+     * @param x2 second x coordinate
+     * @param y2 second y coordinate
+     * @return the Manhattan distance between x1,y1 and x2,y2
+     */
     private int getManhattanDist(int x1, int y1, int x2, int y2){
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
@@ -134,10 +143,18 @@ public class Board {
     }
 
     /**
-     * adds an enemy to the start of the path
+     * Adds an enemy to the start of the path
      * @param enemy to be added
      */
     public void spawn(Enemy enemy){
         enemies.add(enemy);
+    }
+
+    /**
+     * Indicates whether there are enemies on the path
+     * @return true if there are enemies on the path, else false
+     */
+    public boolean pathEmpty(){
+        return enemies.isEmpty();
     }
 }
