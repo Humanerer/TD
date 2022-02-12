@@ -9,4 +9,9 @@ public class Path implements BoardPiece{
     public char asChar() {
         return '=';
     }
+
+    @Override
+    public String getImageDir() {
+        return null;
+    }
 }

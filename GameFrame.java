@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -6,6 +7,8 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class GameFrame extends JFrame {
@@ -14,15 +17,18 @@ public class GameFrame extends JFrame {
     private JButton jButton = new JButton();
     int boardWidth;
     int boardHeight;
+    String[][] pieceNames;
 
-    GameFrame(int boardWidth, int boardHeight){
+    GameFrame(int boardWidth, int boardHeight) throws IOException {
+        pieceNames = new String[boardWidth][boardHeight];
+
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         jButton.setVisible(true);
         jButton.setFocusPainted(false);
         jButton.setBorderPainted(false);
 
-        init();
+        updateDisplay();
         add(jButton);
 
         setSize(boardWidth * pixPerGrid, boardHeight * pixPerGrid);
@@ -32,7 +38,7 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void init(){
+    public void updateDisplay() throws IOException {
         Random random = new Random();
 
         BufferedImage bufferedImage = new BufferedImage(boardWidth*pixPerGrid, boardHeight*pixPerGrid,BufferedImage.TYPE_INT_RGB);
@@ -40,11 +46,27 @@ public class GameFrame extends JFrame {
 
         for (int buttonY = 0; buttonY < boardHeight; buttonY++){
             for (int buttonX = 0; buttonX < boardWidth; buttonX++){
-                graphics2D.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
-                graphics2D.fillRect(buttonX*pixPerGrid, buttonY*pixPerGrid, pixPerGrid, pixPerGrid);
+                int y = (boardHeight-buttonY)*pixPerGrid;
+                int x = buttonX*pixPerGrid;
+
+                if (pieceNames[buttonX][buttonY] == null){
+                    graphics2D.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
+                    graphics2D.fillRect(x, y, pixPerGrid, pixPerGrid);
+                } else {
+                    BufferedImage pieceImage = ImageIO.read(new File("images/"+pieceNames[buttonX][buttonY]));
+                    graphics2D.drawImage(pieceImage, x, y, pixPerGrid, pixPerGrid, null);
+                }
             }
         }
-
         jButton.setIcon(new ImageIcon(bufferedImage));
+    }
+
+    public void drawPiece(int x, int y, String pieceName) throws IOException {
+        pieceNames[x][y] = pieceName;
+        updateDisplay();
+    }
+
+    public JButton getButton(){
+        return jButton;
     }
 }

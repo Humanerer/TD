@@ -19,6 +19,11 @@ public class Tower implements BoardPiece{
         return 'T';
     }
 
+    @Override
+    public String getImageDir() {
+        return "Tower.png";
+    }
+
     public int getAttackRadius(){
         return attackRadius;
     }

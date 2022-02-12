@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.LinkedList;
 
 class SimpleTD {
@@ -14,12 +15,23 @@ class SimpleTD {
             path.add(new CoordVector(x,4));
         }
 
-        GameFrame gameFrame = new GameFrame(width, height);
+        GameFrame gameFrame = null;
+        try {
+            gameFrame = new GameFrame(width, height);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Board board = new Board(width, height, path);
         board.printBoard();
         System.out.println();
-        board.placeTower(new Tower(4,5),4,5);
+        Tower tower = new Tower(4,5);
+        board.placeTower(tower,4,5);
+        try {
+            gameFrame.drawPiece(4,5, tower.getImageDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        board.spawn(new Enemy());
 
         try {
@@ -29,6 +41,7 @@ class SimpleTD {
                 board.spawn(new Enemy());
                 board.printBoard();
                 System.out.println(lives);
+                gameFrame.updateDisplay();
 
                 Thread.sleep(frameDelayMs);
             }
