@@ -10,7 +10,7 @@ class SimpleTD {
         final int frameDelayMs = 200;
 
         LinkedList<CoordVector> path = new LinkedList<CoordVector>();
-        for (int x = 0; x < 32; x++) {
+        for (int x = 0; x < width; x++) {
             path.add(new CoordVector(x,4));
         }
 
@@ -38,6 +38,6 @@ class SimpleTD {
         }
 
 
-
+        gameFrame.dispose();
     }
 }
