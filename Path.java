@@ -12,6 +12,6 @@ public class Path implements BoardPiece{
 
     @Override
     public String getImageDir() {
-        return null;
+        return "Path.png";
     }
 }

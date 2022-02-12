@@ -10,17 +10,25 @@ class SimpleTD {
         int lives = 10;
         final int frameDelayMs = 200;
 
-        LinkedList<CoordVector> path = new LinkedList<CoordVector>();
-        for (int x = 0; x < width; x++) {
-            path.add(new CoordVector(x,4));
-        }
-
         GameFrame gameFrame = null;
         try {
             gameFrame = new GameFrame(width, height);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        LinkedList<CoordVector> path = new LinkedList<CoordVector>();
+        for (int x = 0; x < width; x++) {
+            path.add(new CoordVector(x,4));
+            try {
+                Path p = new Path();
+                gameFrame.drawPiece(x,4, p.getImageDir());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
         Board board = new Board(width, height, path);
         board.printBoard();

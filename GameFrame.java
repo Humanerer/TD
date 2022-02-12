@@ -44,14 +44,16 @@ public class GameFrame extends JFrame {
         BufferedImage bufferedImage = new BufferedImage(boardWidth*pixPerGrid, boardHeight*pixPerGrid,BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = bufferedImage.createGraphics();
 
+        BufferedImage backGround = ImageIO.read(new File("images/background.jpg"));
+        graphics2D.drawImage(backGround, 0, 0, boardWidth*pixPerGrid, boardHeight*pixPerGrid, null);
+
         for (int buttonY = 0; buttonY < boardHeight; buttonY++){
             for (int buttonX = 0; buttonX < boardWidth; buttonX++){
                 int y = (boardHeight-buttonY)*pixPerGrid;
                 int x = buttonX*pixPerGrid;
-
                 if (pieceNames[buttonX][buttonY] == null){
-                    graphics2D.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
-                    graphics2D.fillRect(x, y, pixPerGrid, pixPerGrid);
+//                    graphics2D.setColor(new Color(random.nextInt(100),random.nextInt(100),random.nextInt(100)));
+//                    graphics2D.fillRect(x, y, pixPerGrid, pixPerGrid);
                 } else {
                     BufferedImage pieceImage = ImageIO.read(new File("images/"+pieceNames[buttonX][buttonY]));
                     graphics2D.drawImage(pieceImage, x, y, pixPerGrid, pixPerGrid, null);
@@ -63,7 +65,7 @@ public class GameFrame extends JFrame {
 
     public void drawPiece(int x, int y, String pieceName) throws IOException {
         pieceNames[x][y] = pieceName;
-        updateDisplay();
+//        updateDisplay();
     }
 
     public JButton getButton(){
