@@ -31,8 +31,8 @@ class SimpleTD {
 
 
         Board board = new Board(width, height, path);
-        board.printBoard();
-        System.out.println();
+        // board.printBoard();
+        // System.out.println();
         Tower tower = new Tower(4,5);
         board.placeTower(tower,4,5);
         try {
@@ -47,9 +47,10 @@ class SimpleTD {
                 board.updateTowers();
                 lives -= board.updateEnemies();
                 board.spawn(new Enemy());
-                board.printBoard();
+                // board.printBoard();
+                // System.out.println(board.asString());
                 System.out.println(lives);
-                gameFrame.updateDisplay();
+                gameFrame.updateDisplay(board.asString());
 
                 Thread.sleep(frameDelayMs);
             }
