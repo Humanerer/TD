@@ -115,6 +115,44 @@ public class Board {
         System.out.println();
     }
 
+    /**
+     * Returns the board in the form of a string
+     * @return the board as a string
+     */
+    public String asString(){
+        String output = "";
+        for (int x = 0; x < width+2; x++){
+            output += "#";
+        }
+        output += "\n";
+        for (int y = height-1; y >= 0; y--){
+            output += '#';
+            for (int x = 0; x < width; x++){
+                // output += " ";
+
+                if (pieceBoard[x][y] == null){
+                    output += " ";
+                } else if (enemyAtCoord(x,y)){
+                    output += "E";
+
+                } else {
+                    output += pieceBoard[x][y].asChar();
+                }
+            }
+            output += "#\n";
+        }
+        for (int x = 0; x < width+2; x++){
+            output += "#";
+        }
+        return output += "\n";
+    }
+
+    /**
+     * Returns true if there is an enemy on the board at the given x y coordinates, false otherwise
+     * @param x coord on the board
+     * @param y coord on the board
+     * @return true if there is an enemy at the given x and y coordinates
+     */
     private boolean enemyAtCoord(int x, int y){
         for (Enemy enemy : enemies){
             CoordVector enemyCoord = path.get(enemy.getPathIndex());
