@@ -15,11 +15,11 @@ import java.util.Random;
 
 public class GameFrame extends JFrame {
 
-    final int pixPerGrid = 40;
+    private final int pixPerGrid = 40;
     private JButton jButton = new JButton();
-    int boardWidth;
-    int boardHeight;
-    String[][] pieceNames;
+    private int boardWidth;
+    private int boardHeight;
+    private String[][] pieceNames;
 
     GameFrame(int boardWidth, int boardHeight) throws IOException {
         pieceNames = new String[boardWidth][boardHeight];
@@ -102,5 +102,9 @@ public class GameFrame extends JFrame {
 
     public JButton getButton(){
         return jButton;
+    }
+
+    public int getPixPerGrid(){
+        return pixPerGrid;
     }
 }
