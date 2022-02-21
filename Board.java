@@ -195,4 +195,12 @@ public class Board {
     public boolean pathEmpty(){
         return enemies.isEmpty();
     }
+
+    /**
+     * Getter for enemies on the path
+     * @return a linked list of enemies
+     */
+    public LinkedList<Enemy> getEnemies(){
+        return enemies;
+    }
 }
