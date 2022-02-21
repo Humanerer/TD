@@ -1,12 +1,15 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
-class SimpleTD {
+class SimpleTDEngine {
 
     final static int width = 32;
     final static int height = 18;
 
-    public static void main(String[] args) {
+    public SimpleTDEngine () {
         int lives = 10;
         final int frameDelayMs = 200;
 
@@ -17,7 +20,7 @@ class SimpleTD {
             e.printStackTrace();
         }
 
-        LinkedList<CoordVector> path = new LinkedList<CoordVector>();
+        LinkedList<CoordVector> path = new LinkedList<>();
         for (int x = 0; x < width; x++) {
             path.add(new CoordVector(x,4));
             try {
@@ -34,13 +37,29 @@ class SimpleTD {
         // board.printBoard();
         // System.out.println();
         Tower tower = new Tower(4,5);
-        board.placeTower(tower,4,5);
+
         try {
-            gameFrame.drawPiece(4,5, tower.getImageDir());
+            if (board.placeTower(tower,4,5)){
+                gameFrame.drawPiece(4,5, tower.getImageDir());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 //        board.spawn(new Enemy());
+
+        GameFrame finalGameFrame = gameFrame;
+        gameFrame.getButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Point xy = finalGameFrame.getButton().getMousePosition();
+                int x = width-xy.x/finalGameFrame.getPixPerGrid()+1;
+                int y = height-xy.y/finalGameFrame.getPixPerGrid()+1;
+                System.out.println(x+" "+y);
+                board.placeTower(new Tower(x,y),x,y);
+            }
+        });
+
+
 
         try {
             while (lives > 0){
