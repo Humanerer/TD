@@ -52,7 +52,7 @@ class SimpleTDEngine {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Point xy = finalGameFrame.getButton().getMousePosition();
-                int x = width-xy.x/finalGameFrame.getPixPerGrid()+1;
+                int x = xy.x/finalGameFrame.getPixPerGrid()+1;
                 int y = height-xy.y/finalGameFrame.getPixPerGrid()+1;
                 System.out.println(x+" "+y);
                 board.placeTower(new Tower(x,y),x,y);

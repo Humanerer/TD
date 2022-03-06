@@ -8,9 +8,12 @@ import java.awt.Image;
 import java.awt.Font;
 import java.awt.Paint;
 import java.awt.Graphics2D;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class GameFrame extends JFrame {
@@ -34,6 +37,7 @@ public class GameFrame extends JFrame {
         add(jButton);
 
         setSize(boardWidth * pixPerGrid, boardHeight * pixPerGrid);
+        setLocation(50,50);
         setUndecorated(true);
         setResizable(false);
         setVisible(true);
@@ -61,13 +65,26 @@ public class GameFrame extends JFrame {
             int fontSize = boardHeight*pixPerGrid/lineCount;
 
             graphics2D.setColor(new Color(167, 136, 69));
-            graphics2D.setFont(new Font("Courier", Font.PLAIN, fontSize));
+            Font font = new Font("Courier", Font.PLAIN, fontSize);
+            graphics2D.setFont(font);
+
+
+//            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+//            attributes.put(TextAttribute.TRACKING, 0.3);
+//            font.deriveFont(attributes);
+
+
             int lineStart = 0;
             int lineEnd = s.indexOf("\n");
             int lineNo = 0;
 
             while (lineEnd >= 0){
-                graphics2D.drawString(s.substring(lineStart, lineEnd), 0, boardHeight+lineNo*fontSize);
+                String line = s.substring(lineStart, lineEnd);
+//                graphics2D.drawString(line, 0, boardHeight+lineNo*fontSize);
+                char[] chars = line.toCharArray();
+                for (int charNo = 1; charNo < line.length(); charNo++){
+                    graphics2D.drawString(""+chars[charNo], (charNo-1)*fontSize, boardHeight+lineNo*fontSize);
+                }
                 lineStart = lineEnd;
                 lineEnd = s.indexOf("\n",lineEnd+1);
                 lineNo++;
